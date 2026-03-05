@@ -2,9 +2,9 @@
 A LLM pipeline for generating structured Domain-Speicfic Language (DSL) configurations using retrieval, validation, and automatic repair.
 
 ## Overview 
-The system converts a natural language query into a structured configuration
-through a multi-stage pipeline:
+The goal of this system is to convert natural language queries into structured DSL configurations while maintaining deterministic correctness.
 
+Since LLM generation is inherently probabilistic, the pipeline is designed as a multi-stage workflow that separates semantic reasoning from deterministic validation.
 ```
 Query
  ↓
@@ -28,42 +28,73 @@ Final Config
 rag-structured-generation/
 │
 ├─ llm/
-│   ├─ client.py          # LLM API wrapper
-│   ├─ prompts.py         # prompt construction: hard requirements, field policies, user query, and context. 
-│   ├─ repair.py          # repair prompt logic
-|   ├─ validator.py       # placeholder for domain-specific validators
+│   ├─ client.py                 # LLM API wrapper
+│   ├─ prompts.py                # prompt construction (system + user input)
+│   ├─ repair.py                 # build repair prompts from validation reports
+|   ├─ validator.py              # placeholder for domain-specific validators
 │   └─ prompts/
-│       ├─ system_generate.txt
-|       └─ system_repair.txt
+│       ├─ system_generate.txt   # hard requirements, field policies
+|       └─ system_repair.txt    
 ├─ rag/
-|   ├─ make_chunks.py         # build the json dictionaries from raw input 
-│   ├─ build_index.py         # embed the json dictionaries to vector dimension
-│   └─ retrieve.py            # embed the query and retrieve top k relevant examples and mandatory rules. 
+|   ├─ make_chunks.py            # convert raw configs into structured JSON chunks 
+│   ├─ build_index.py            # embed chunks and build vector index
+│   └─ retrieve.py               # embed query and retrieve top k relevant examples and mandatory rules. 
 | 
 ├─ index/
-│   └─ README.md          # placeholder for rules/examples
+│   └─ README.md                 # placeholder for vector index files
 │
 ├─ knowledge/
 |   ├─ processed/
-│       └─ README.md      # placeholder for json dictionaries
+│       └─ README.md             # placeholder for processed JSON chunks
 |   └─ raw/
-|       └─ README.md      # placeholder for raw example configurations
-│
-├─ app.py                 # entry point of config generation 
+|       └─ README.md             # placeholder for raw example configurations
+|
+├─ runs/
+|   └─ README.md                 # placeholder for user-generated run logs
+|
+├─ app.py                        # entry point for config generation 
 └─ README.md
 ```
-## Key Features
-- **Retrieval-augmented generation**
-  combines rules and examples for structured generation.
+## Design Principles
 
-- **Validation-repair loop**
-  deterministic validation ensures correctness and triggers targeted fixes.
+This project is designed as a **reliable structured-generation system**, not a one-shot RAG demo.
+The key challenge is turning **probabilistic LLM outputs** into **deterministic, structured configs**.
 
-- **Patch-based repair**
-  the LLM modifies only erroneous lines instead of regenerating the entire config.
+### 1) Separation of concerns
+The pipeline isolates responsibilities into clear stages:
 
-- **Modular architecture**
-  retrieval, generation, validation, and repair are separated components.
+- **Retrieval**: fetch relevant rules and examples (context grounding)
+- **Generation**: translate the user request into an initial candidate config
+- **Validation**: deterministically check structural constraints and emit a structured report
+- **Repair**: apply minimal patches based on the validation report (instead of regenerating)
+
+This separation makes the system easier to debug and extend.
+
+### 2) Rules-first, examples-second
+Retrieved context may contain both rules and examples. The system enforces a strict precedence:
+
+- **RULES override EXAMPLES** if there is any conflict.
+
+This prevents pattern imitation from violating hard constraints.
+
+### 3) Patch-based repair for stability
+Rather than re-generating the entire config after validation failures, the repair step operates in **PATCH mode**:
+
+- keep unchanged lines as-is  
+- edit only the smallest set of lines needed to resolve validation errors
+
+This reduces drift and improves reproducibility across runs.
+
+### 4) Deterministic interface boundaries
+The pipeline communicates across stages using explicit artifacts:
+
+- retrieved chunks (structured)
+- rendered context (text)
+- candidate config (DSL text)
+- validation report (structured)
+
+These boundaries make behavior observable and allow swapping implementations
+(e.g., different retrievers, different validators, different LLMs).
 
 ## Installation
 1. Clone the repository:
