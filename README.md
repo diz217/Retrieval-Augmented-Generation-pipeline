@@ -41,16 +41,16 @@ rag-structured-generation/
 │   └─ retrieve.py               # embed query and retrieve top k relevant examples and mandatory rules. 
 | 
 ├─ index/
-│   └─ README.md                 # placeholder for vector index files
+│   └─ readme.md                 # placeholder for vector index files
 │
 ├─ knowledge/
 |   ├─ processed/
-│       └─ README.md             # placeholder for processed JSON chunks
+│       └─ readme.md             # placeholder for processed JSON chunks
 |   └─ raw/
-|       └─ README.md             # placeholder for raw example configurations
+|       └─ readme.md             # placeholder for raw example configurations
 |
 ├─ runs/
-|   └─ README.md                 # placeholder for user-generated run logs
+|   └─ readme.md                 # placeholder for user-generated run logs
 |
 ├─ app.py                        # entry point for config generation 
 └─ README.md
