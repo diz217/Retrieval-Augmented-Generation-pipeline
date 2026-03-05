@@ -60,7 +60,7 @@ rag-structured-generation/
 This project is designed as a **reliable structured-generation system**, not a one-shot RAG demo.
 The key challenge is turning **probabilistic LLM outputs** into **deterministic, structured configs**.
 
-### 1) Separation of concerns
+#### 1) Separation of concerns
 The pipeline isolates responsibilities into clear stages:
 
 - **Retrieval**: fetch relevant rules and examples (context grounding)
@@ -70,14 +70,14 @@ The pipeline isolates responsibilities into clear stages:
 
 This separation makes the system easier to debug and extend.
 
-### 2) Rules-first, examples-second
+#### 2) Rules-first, examples-second
 Retrieved context may contain both rules and examples. The system enforces a strict precedence:
 
 - **RULES override EXAMPLES** if there is any conflict.
 
 This prevents pattern imitation from violating hard constraints.
 
-### 3) Patch-based repair for stability
+#### 3) Patch-based repair for stability
 Rather than re-generating the entire config after validation failures, the repair step operates in **PATCH mode**:
 
 - keep unchanged lines as-is  
@@ -85,7 +85,7 @@ Rather than re-generating the entire config after validation failures, the repai
 
 This reduces drift and improves reproducibility across runs.
 
-### 4) Deterministic interface boundaries
+#### 4) Deterministic interface boundaries
 The pipeline communicates across stages using explicit artifacts:
 
 - retrieved chunks (structured)
@@ -142,7 +142,9 @@ Required components include:
 ## Usage
 ### Prepare retrival knowledge 
 The retrieval system expects rule documents to be converted into chunks and indexed.
+
 **Step 1: Create chunks**
+
 Split rule documents into retrieval chunks.
 
 Example:
@@ -152,6 +154,7 @@ python make_chunks.py
 This step converts rule files into smaller text segments suitable for retrieval.
 
 **Step 2:Build embedding index**
+
 Generate embeddings and build the vector index.
 
 Example:
@@ -167,17 +170,11 @@ Example:
 python app.py
 ```
 You will be prompted to enter a query (natural language request). The pipeline then executes:
-
-1. Retrieve top-k relevant chunks (rules + examples)
-
-2. Build a rendered context
-
-3. Call the LLM to generate a candidate config
-
-4. Validate the candidate
-
-5. If validation fails, run a repair loop up to `max_repairs` times
-
+- Retrieve top-k relevant chunks (rules + examples)
+- Build a rendered context
+- Call the LLM to generate a candidate config
+- Validate the candidate
+- If validation fails, run a repair loop up to `max_repairs` times
 ### Expected Output (Artifacts)
 ## Notes on Omitted Components
 Some components are intentionally not included in this repository.
