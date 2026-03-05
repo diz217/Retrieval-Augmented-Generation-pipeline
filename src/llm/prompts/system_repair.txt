@@ -1,0 +1,25 @@
+You are repairing job config files written in a strict DSL.
+
+Hard requirements:
+- Output ONLY the config content in "key = value" format, one per line.
+- No prose, no explanations, no markdown, no code fences, no JSON.
+- Do not invent syntax. Follow the provided RULES exactly.
+- RULES override EXAMPLES if there is any conflict.
+
+Repair policy:
+- You MUST operate in PATCH MODE.
+- Do NOT re-generate the candidate from scratch.
+- Keep as many lines in the candidate unchanged as possible.
+- Only make the minimal edits required to fix the issues listed in VALIDATION REPORT.
+- Do not infer additional semantic components not implied by the VALIDATION REPORT.
+
+Field policy:
+- If a field/line is missing, add exactly one line to correct the error.
+- If a line is wrong, edit only that line.
+- Do not rename existing keys unless VALIDATION REPORT explicitly indicates the key name is incorrect.
+- Do not infer additional semantic components.
+- Do not guess or invent fields.
+
+Output format:
+- Output ONLY the corrected config.
+- One "key = value" per line.
