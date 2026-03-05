@@ -106,6 +106,36 @@ cd Retrieval-Augmented-Generation-pipeline
 ```bash
 pip install -r requirements.txt
 ```
+Python version recommended:
+```
+Python >=3.9
+```
+3. Configure API credentials
+This project relies on external APIs for embedding and LLM inference.
+
+Create a .env file or export environment variables.
+Example:
+```bash
+export HF_TOKEN=your_huggingface_token
+export OPENAI_API_KEY=your_openai_key
+```
+Supported providers include:
+
+- HuggingFace (recommended for embedding models)
+- OpenAI
+- other compatible LLM API providers
+
+These tokens are not required for repository installation, but are required for running the full pipeline.
+
+4. Provide domain configuration
+For legal and intellectual-property reasons, this repository **does not include domain-specific rules or proprietary data**.
+
+Users must provide their own configuration:
+
+Required components include:
+- **Raw input data**
+- **Domain rules** (used during retrieval)
+- **Validation logic** (used to check generated outputs)
 ## Usage
 Run the pipeline:
 ```
