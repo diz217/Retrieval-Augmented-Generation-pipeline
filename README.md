@@ -97,12 +97,12 @@ These boundaries make behavior observable and allow swapping implementations
 (e.g., different retrievers, different validators, different LLMs).
 
 ## Installation
-1. Clone the repository:
+### 1) Clone the repository:
 ```bash
 git clone https://github.com/diz217/Retrieval-Augmented-Generation-pipeline.git
 cd Retrieval-Augmented-Generation-pipeline
 ```
-2. Install dependencies:
+### 2) Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
@@ -110,7 +110,7 @@ Python version recommended:
 ```bash
 Python >=3.9
 ```
-3. Configure API credentials
+### 3) Configure API credentials
  
 This project relies on external APIs for embedding and LLM inference.
 Create a .env file or export environment variables.
@@ -126,8 +126,7 @@ Supported providers include:
 - other compatible LLM API providers
 These tokens are not required for repository installation, but are required for running the full pipeline.
 
-4. Provide domain configuration
- 
+### 4) Provide domain configuration
 For legal and intellectual-property reasons, this repository **does not include domain-specific rules or proprietary data**.
 Users must provide their own configuration:
 
