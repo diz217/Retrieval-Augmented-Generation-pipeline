@@ -98,12 +98,12 @@ These boundaries make behavior observable and allow swapping implementations
 
 ## Installation
 1. Clone the repository:
-```
+```bash
 git clone https://github.com/diz217/Retrieval-Augmented-Generation-pipeline.git
 cd Retrieval-Augmented-Generation-pipeline
 ```
 2. Install dependencies:
-```
+```bash
 pip install -r requirements.txt
 ```
 ## Usage
