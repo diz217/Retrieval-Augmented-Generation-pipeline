@@ -1,5 +1,5 @@
 # Retrieval-Augmented-Generation-pipeline
-A LLM pipeline for generating structured Domain-Speicfic Language (DSL) configurations using retrieval, validation, and automatic repair.
+A LLM architecture for generating structured Domain-Speicfic Language (DSL) configurations using retrieval, validation, and automatic repair.
 
 ## Overview 
 The goal of this system is to convert natural language queries into structured DSL configurations while maintaining deterministic correctness.
@@ -125,9 +125,11 @@ Supported providers include:
 - HuggingFace (recommended for embedding models)
 - OpenAI
 - other compatible LLM API providers
+- 
 These tokens are not required for repository installation, but are required for running the full pipeline.
 
 **4) Provide domain configuration:**
+
 For legal and intellectual-property reasons, this repository **does not include domain-specific rules or proprietary data**.
 
 Users must provide their own configuration:
