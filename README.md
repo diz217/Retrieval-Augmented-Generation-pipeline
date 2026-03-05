@@ -60,7 +60,7 @@ rag-structured-generation/
 This project is designed as a **reliable structured-generation system**, not a one-shot RAG demo.
 The key challenge is turning **probabilistic LLM outputs** into **deterministic, structured configs**.
 
-#### 1) Separation of concerns
+#### 1) Separation of Concerns
 The pipeline isolates responsibilities into clear stages:
 
 - **Retrieval**: fetch relevant rules and examples (context grounding)
@@ -70,14 +70,14 @@ The pipeline isolates responsibilities into clear stages:
 
 This separation makes the system easier to debug and extend.
 
-#### 2) Rules-first, examples-second
+#### 2) Rules-first, Examples-second
 Retrieved context may contain both rules and examples. The system enforces a strict precedence:
 
 - **RULES override EXAMPLES** if there is any conflict.
 
 This prevents pattern imitation from violating hard constraints.
 
-#### 3) Patch-based repair for stability
+#### 3) Patch-based Repair for Stability
 Rather than re-generating the entire config after validation failures, the repair step operates in **PATCH mode**:
 
 - keep unchanged lines as-is  
@@ -85,7 +85,7 @@ Rather than re-generating the entire config after validation failures, the repai
 
 This reduces drift and improves reproducibility across runs.
 
-#### 4) Deterministic interface boundaries
+#### 4) Deterministic Interface Boundaries
 The pipeline communicates across stages using explicit artifacts:
 
 - retrieved chunks (structured)
@@ -97,12 +97,12 @@ These boundaries make behavior observable and allow swapping implementations
 (e.g., different retrievers, different validators, different LLMs).
 
 ## Installation
-#### 1) Clone the repository:
+#### 1) Clone the Repository:
 ```bash
 git clone https://github.com/diz217/Retrieval-Augmented-Generation-pipeline.git
 cd Retrieval-Augmented-Generation-pipeline
 ```
-#### 2) Install dependencies:
+#### 2) Install Dependencies:
 ```bash
 pip install -r requirements.txt
 ```
@@ -110,7 +110,7 @@ Python version recommended:
 ```bash
 Python >=3.9
 ```
-#### 3) Configure API credentials:
+#### 3) Configure API Credentials:
  This project relies on external APIs for embedding and LLM inference.
 
 Create a .env file or export environment variables.
@@ -126,7 +126,7 @@ Supported providers include:
 - other compatible LLM API providers
 
 These tokens are not required for repository installation, but are required for running the full pipeline.
-#### 4) Provide domain configuration:
+#### 4) Provide Domain Configuration:
 For legal and intellectual-property reasons, this repository **does not include domain-specific rules or proprietary data**.
 
 Users must provide their own configuration:
@@ -137,10 +137,10 @@ Required components include:
 - **Validation logic** (used to check generated outputs)
 
 ## Usage
-### Prepare retrival knowledge 
+### Prepare Retrival Knowledge 
 The retrieval system expects rule documents to be converted into chunks and indexed.
 
-#### Step 1: Create chunks
+#### Step 1: Create Chunks
 Split rule documents into retrieval chunks.
 
 Example:
@@ -149,15 +149,16 @@ python make_chunks.py
 ```
 This step converts rule files into smaller text segments suitable for retrieval.
 
-#### Step 2: Build embedding index
+#### Step 2: Build Embedding Index
 Generate embeddings and build the vector index.
 
 Example:
 ```bash
 python build_index.py
 ```
-This step requires an embedding model (e.g., HuggingFace). A HuggingFace token is required as environment variable. 
-### Run the generation pipeline
+This step requires an embedding model (e.g., HuggingFace). A HuggingFace token is required as environment variable.
+
+### Run the Generation Pipeline
 Once the index is built, run the main pipeline.
 
 Example:
@@ -170,6 +171,7 @@ You will be prompted to enter a query (natural language request). The pipeline t
 - Call the LLM to generate a candidate config
 - Validate the candidate
 - If validation fails, run a repair loop up to `max_repairs` times
+
 ### Expected Output (Artifacts)
 ## Notes on Omitted Components
 Some components are intentionally not included in this repository.
