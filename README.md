@@ -29,20 +29,27 @@ rag-structured-generation/
 │
 ├─ llm/
 │   ├─ client.py          # LLM API wrapper
-│   ├─ prompting.py       # prompt construction
-│   └─ repairing.py       # repair prompt logic
-│
-├─ pipeline/
-│   ├─ generate.py        # initial generation step
-│   └─ repair_loop.py     # validation-repair loop
-│
-├─ knowledge/
+│   ├─ prompts.py         # prompt construction: hard requirements, field policies, user query, and context. 
+│   ├─ repair.py          # repair prompt logic
+|   ├─ validator.py       # placeholder for domain-specific validators
+│   └─ prompts/
+│       ├─ system_generate.txt
+|       └─ system_repair.txt
+├─ rag/
+|   ├─ make_chunks.py         # build the json dictionaries from raw input 
+│   ├─ build_index.py         # embed the json dictionaries to vector dimension
+│   └─ retrieve.py            # embed the query and retrieve top k relevant examples and mandatory rules. 
+| 
+├─ index/
 │   └─ README.md          # placeholder for rules/examples
 │
-├─ validators/
-│   └─ README.md          # placeholder for domain validators
+├─ knowledge/
+|   ├─ processed/
+│       └─ README.md      # placeholder for json dictionaries
+|   └─ raw/
+|       └─ README.md      # placeholder for raw example configurations
 │
-├─ main.py                # entry point
+├─ app.py                 # entry point of config generation 
 └─ README.md
 ```
 ## Key Features
