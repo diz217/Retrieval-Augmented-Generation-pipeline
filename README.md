@@ -125,7 +125,7 @@ Supported providers include:
 - HuggingFace (recommended for embedding models)
 - OpenAI
 - other compatible LLM API providers
-- 
+
 These tokens are not required for repository installation, but are required for running the full pipeline.
 
 **4) Provide domain configuration:**
@@ -135,16 +135,50 @@ For legal and intellectual-property reasons, this repository **does not include 
 Users must provide their own configuration:
 
 Required components include:
-- **Raw input data**
+- **Raw input data** (knowledge preparation)
 - **Domain rules** (used during retrieval)
 - **Validation logic** (used to check generated outputs)
 
 ## Usage
-Run the pipeline:
+### Prepare retrival knowledge 
+The retrieval system expects rule documents to be converted into chunks and indexed.
+**Step 1: Create chunks**
+Split rule documents into retrieval chunks.
+
+Example:
+```bash
+python make_chunks.py
 ```
+This step converts rule files into smaller text segments suitable for retrieval.
+
+**Step 2:Build embedding index**
+Generate embeddings and build the vector index.
+
+Example:
+```bash
+python build_index.py
+```
+This step requires an embedding model (e.g., HuggingFace). A HuggingFace token is required as environment variable. 
+### Run the generation pipeline
+Once the index is built, run the main pipeline.
+
+Example:
+```bash
 python app.py
 ```
+You will be prompted to enter a query (natural language request). The pipeline then executes:
 
+1. Retrieve top-k relevant chunks (rules + examples)
+
+2. Build a rendered context
+
+3. Call the LLM to generate a candidate config
+
+4. Validate the candidate
+
+5. If validation fails, run a repair loop up to `max_repairs` times
+
+### Expected Output (Artifacts)
 ## Notes on Omitted Components
 Some components are intentionally not included in this repository.
 
