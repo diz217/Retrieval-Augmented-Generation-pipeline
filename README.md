@@ -5,6 +5,7 @@ A LLM pipeline for generating structured Domain-Speicfic Language(DSL) configura
 The system converts a natural language query into a structured configuration
 through a multi-stage pipeline:
 
+```
 Query
  ↓
 Retrieval (rules + examples)
@@ -16,7 +17,7 @@ Validation
 Repair Loop
  ↓
 Final Config
-
+```
 - **Retrieval** – retrieve relevant rules and examples.
 - **Generation** – the LLM generates an initial DSL config.
 - **Validation** – deterministic checks detect structural errors.
