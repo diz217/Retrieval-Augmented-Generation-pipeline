@@ -145,7 +145,7 @@ Split rule documents into retrieval chunks.
 
 Example:
 ```bash
-python make_chunks.py
+python rag/make_chunks.py
 ```
 This step converts rule files into smaller text segments suitable for retrieval.
 
@@ -154,7 +154,7 @@ Generate embeddings and build the vector index.
 
 Example:
 ```bash
-python build_index.py
+python rag/build_index.py
 ```
 This step requires an embedding model (e.g., HuggingFace). A HuggingFace token is required as environment variable.
 
