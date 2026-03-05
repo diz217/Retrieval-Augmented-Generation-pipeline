@@ -215,7 +215,18 @@ To comply with company confidentiality and intellectual property policies, the f
 
 This repository focuses on the **pipeline architecture** rather than the domain-specific knowledge. The included code demonstrates the engineering design of the retrieval → generation → validation → repair workflow.
 
+## Framework Note (LangChain Comparison)
+This repository implements the RAG pipeline as a small, explicit codebase rather than using an orchestration framework (e.g., LangChain).
 
+**Why:**
+- The goal is to keep retrieval → prompting → validation → repair fully transparent and easy to debug.
+- Structured generation tasks often require strict output constraints and custom validation/repair behavior, which is easier to control with a direct implementation.
+
+**What you can swap in:**
+- A LangChain-based retriever or reranker
+- Tool-calling / agent orchestration around the same validator + repair loop
+
+In short: LangChain can accelerate prototyping, while this repo emphasizes deterministic control, observability, and modular system boundaries.
 
 The result is a more reliable generation workflow.
 
