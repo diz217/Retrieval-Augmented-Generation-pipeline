@@ -1,7 +1,7 @@
 # Retrieval-Augmented-Generation-pipeline
 A LLM pipeline for generating structured Domain-Speicfic Language (DSL) configurations using retrieval, validation, and automatic repair.
 
-## Pipeline Overview 
+## Overview 
 The system converts a natural language query into a structured configuration
 through a multi-stage pipeline:
 
