@@ -173,6 +173,36 @@ You will be prompted to enter a query (natural language request). The pipeline t
 - If validation fails, run a repair loop up to `max_repairs` times
 
 ### Expected Output (Artifacts)
+Each run creates a new folder under `runs/`, named by the run start timestamp **to the second**:
+```bash
+runs/
+  20260304_142226/
+  20260304_142512/
+  ...
+```
+Inside each run folder, the pipeline writes artifacts for debugging and reproducibility:
+```bash
+request.txt          # the user query entered at runtime
+retrieved.json       # retrieved chunks (top-k + forced rules)
+context.txt          # rendered context fed into the LLM
+prompt.txt           # full prompt/messages sent to the LLM (for debugging)
+
+candidate_0.txt      # initial LLM output (generation)
+validation_0.json    # validation report for candidate_0
+
+candidate_1.txt      # repaired output (retry #1)   [only if needed]
+...
+
+final_config.txt     # final accepted config (either candidate_0 or last repaired)
+```
+#### Retry behavior
+- `candidate_0.txt` is always produced (first attempt).
+- If validation fails, the system retries in **PATCH mode** and produces:
+ - `candidate_1.txt`, … up to max_retry
+- `final_config.txt` is the best available result after retries:
+ - The first passing candidate, or
+ - The last candidate if retries are exhausted (depending on your current logic)
+ - 
 ## Notes on Omitted Components
 Some components are intentionally not included in this repository.
 
@@ -185,13 +215,7 @@ To comply with company confidentiality and intellectual property policies, the f
 
 This repository focuses on the **pipeline architecture** rather than the domain-specific knowledge. The included code demonstrates the engineering design of the retrieval → generation → validation → repair workflow.
 
-## Design Insight
-Structured generation tasks require deterministic correctness,while LLM outputs are probabilistic.
 
-This pipeline addresses the problem by combining:
-- retrieval for contextual grounding
-- validation for deterministic checks
-- repair loops for targeted corrections
 
 The result is a more reliable generation workflow.
 
