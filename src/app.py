@@ -139,7 +139,7 @@ def run_once(user_request: str, k: int = DEFAULT_K, force_rules: bool = True, ma
         
         report = validate_candidate(candidate)
         art.validation_path.write_text(json.dumps(report.to_dict(), ensure_ascii=False, indent=2), encoding="utf-8")
-
+        ok = report.ok
     if not ok:
         raise RuntimeError(f"Validation failed after {repairs} repair attempts. See: {art.run_dir}")
 
