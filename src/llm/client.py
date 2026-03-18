@@ -4,7 +4,6 @@ from typing import Optional
 from openai import OpenAI
 import time
 
-
 @dataclass
 class LLMConfig:
     """
@@ -17,7 +16,6 @@ class LLMConfig:
     timeout_s: float = 60.0
     retries: int = 2
     retry_backoff_s: float = 1.5
-
 
 class LLMClient:
     """
@@ -49,5 +47,4 @@ class LLMClient:
                     break
                 time.sleep(cfg.retry_backoff_s * (attempt + 1))
         raise RuntimeError(f"LLM call failed after retries: {last_err}")
-
 GLOBAL_LLM_CLIENT = LLMClient(LLMConfig())
