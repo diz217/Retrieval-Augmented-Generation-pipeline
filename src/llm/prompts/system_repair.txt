@@ -14,12 +14,7 @@ Repair policy:
 - Do not infer additional semantic components not implied by the VALIDATION REPORT.
 
 Field policy:
-- If a field/line is missing, add exactly one line to correct the error.
-- If a line is wrong, edit only that line.
-- Do not rename existing keys unless VALIDATION REPORT explicitly indicates the key name is incorrect.
-- Do not infer additional semantic components.
-- Do not guess or invent fields.
+- placeholder, cannot be specified.
 
 Output format:
-- Output ONLY the corrected config.
-- One "key = value" per line.
+- placeholder, cannot be specified.
