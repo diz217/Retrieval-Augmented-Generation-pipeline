@@ -1,11 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Mar  2 22:55:16 2026
-
-@author: Ding Zhang
-"""
 from __future__ import annotations
-
 import json
 import time
 from dataclasses import dataclass
