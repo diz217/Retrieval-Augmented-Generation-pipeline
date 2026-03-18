@@ -1,12 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Mar  4 01:24:36 2026
-
-@author: Ding Zhang
-"""
-
 from __future__ import annotations
-
 from dataclasses import dataclass
 from typing import Optional
 from openai import OpenAI
