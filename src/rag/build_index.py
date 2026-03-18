@@ -24,6 +24,9 @@ MODEL_NAME = "BAAI/bge-base-en-v1.5"
 
 
 def main():
+    if INDEX_PATH.exists() and META_PATH.exists():
+        print(f"Index already exists at {INDEX_PATH}. Skipping build.")
+        return
     print("Loading chunks...")
     texts = []
     meta = []
