@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Mar  4 14:42:33 2026
-
-@author: Ding Zhang
-"""
-
 from __future__ import annotations
 import json
 from typing import Dict, Any
