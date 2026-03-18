@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Mar  2 16:18:14 2026
-
-@author: Ding Zhang
-"""
-
 import json
 import hashlib
 from pathlib import Path
