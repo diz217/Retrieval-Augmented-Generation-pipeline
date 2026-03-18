@@ -1,12 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Mar  4 00:55:22 2026
-
-@author: Ding Zhang
-"""
-
 from __future__ import annotations
-
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Tuple, Optional,Literal
