@@ -1,26 +1,16 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Mar  4 02:41:45 2026
-
-@author: Ding Zhang
-"""
 from __future__ import annotations
-
 import json
 import re
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Any
 
-
-# Data structures
 @dataclass
 class Issue:
     code: str
     msg: str
     line: Optional[int] = None
     key: Optional[str] = None
-
 
 @dataclass
 class ValidationResult:
@@ -44,13 +34,10 @@ class ValidationResult:
             "master_key": self.master_key,
             "queue": self.queue,
             "jobname_token": self.jobname_token,
-            "dep_var": self.dep_var,
-        }
+            "dep_var": self.dep_var}
 
-# Parsing (syntax)
 _KEY_RE = re.compile(r"^[A-Za-z0-9_`]+$")  # allow `masked keys`, dots, hyphen
 _COMMENT_RE = re.compile(r"^\s*#")
-
 
 def parse_kv_lines(text: str) -> Tuple[Dict[str, str], List[Issue], List[Issue]]:
     """
@@ -87,12 +74,9 @@ def parse_kv_lines(text: str) -> Tuple[Dict[str, str], List[Issue], List[Issue]]
         # Duplicate key policy: last one wins, but warn
         if key in parsed:
             errors.append(Issue(code="DUPLICATE_KEY", msg=f"Duplicate key overwritten: {key}", line=i, key=key))
-
         parsed[key] = value
-
     return parsed, errors
 
-# Semantic heuristics
 def _find_master_js(parsed: Dict[str, str]) -> Optional[str]:
     # master job template recognized ONLY if value ends with ".js"
     for k, v in parsed.items():
@@ -127,10 +111,9 @@ def _find_submission(parsed: Dict[str, str]) -> Optional[str]:
         if "-z" in v:
             s += 1
         return s
-
     candidates.sort(key=score, reverse=True)
     return candidates[0]
-
+    
 def _extract_queue(submission_value: str) -> Optional[str]:
     v = submission_value.lower()
     if "sparaq" in v:
@@ -138,7 +121,6 @@ def _extract_queue(submission_value: str) -> Optional[str]:
     if "slurmq" in v:
         return "slurmq"
     return None
-
 def _has_sparaq_n_flag(submission_value: str) -> bool:
     v = submission_value.lower()
     return re.search(r"(^|\s)-n\d+(\s|$)", v) is not None
@@ -164,8 +146,6 @@ def _token_refers_to_var(token: str) -> Optional[str]:
     if m:
         return m.group(1)
     return None
-
-# Validator v1
 def validate_candidate(text: str) -> ValidationResult:
     parsed, errors = parse_kv_lines(text)
     warnings: List[Issue] = []
@@ -231,7 +211,6 @@ def validate_file(candidate_path: Path) -> ValidationResult:
 def write_validation_json(result: ValidationResult, out_path: Path) -> None:
     Path(out_path).write_text(json.dumps(result.to_dict(), indent=2), encoding="utf-8")
 
-# Convenience CLI
 if __name__ == "__main__":
     import sys
 
